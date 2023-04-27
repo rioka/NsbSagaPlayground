@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using NsbSagaPlayground.Shared;
 using NsbSagaPlayground.Shared.Infrastructure;
 using NServiceBus;
 
@@ -24,14 +25,14 @@ internal partial class Program
     }
   }
 
-  public static IHostBuilder CreateHostBuilder(string[] args)
+  private static IHostBuilder CreateHostBuilder(string[] args)
   {
     var hb = Host
       .CreateDefaultBuilder()
       .UseConsoleLifetime()
       .UseNServiceBus(ctx => {
 
-        var endpointConfig = Bootstrapper.Configure("Sender", ctx.Configuration.GetConnectionString("Data"));
+        var endpointConfig = Bootstrapper.Configure(Endpoints.Sender, ctx.Configuration.GetConnectionString("Data"));
         return endpointConfig;
       });
     

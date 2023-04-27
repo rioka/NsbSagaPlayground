@@ -1,4 +1,5 @@
-﻿using NsbSagaPlayground.Shared.Messages.Commands;
+﻿using NsbSagaPlayground.Shared;
+using NsbSagaPlayground.Shared.Messages.Commands;
 using NServiceBus;
 
 internal partial class Program
@@ -24,7 +25,7 @@ internal partial class Program
           var createOrder = new CreateOrder() {
             Id = lastOrder = Guid.NewGuid()
           };
-          await session.Send("Receiver", createOrder);
+          await session.Send(Endpoints.OrderProcessor, createOrder);
           break;
 
         case ConsoleKey.D2:
@@ -34,7 +35,7 @@ internal partial class Program
             var cancelOrder = new CancelOrder() {
               Id = lastOrder
             };
-            await session.Send("Receiver", cancelOrder);
+            await session.Send(Endpoints.OrderProcessor, cancelOrder);
             lastOrder = default;
           }
           else
