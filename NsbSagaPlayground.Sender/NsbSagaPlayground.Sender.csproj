@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="NServiceBus.Extensions.Hosting" Version="1.1.*" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <None Update="appsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="..\NsbSagaPlayground.Shared\NsbSagaPlayground.Shared.csproj" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Compile Update="Program.SendMessages.cs">
+      <DependentUpon>Program.cs</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+</Project>

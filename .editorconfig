@@ -242,6 +242,11 @@ dotnet_style_explicit_tuple_names = true:suggestion
 dotnet_style_prefer_inferred_tuple_names = true:suggestion
 dotnet_style_prefer_inferred_anonymous_type_member_names = true:suggestion
 
+[*.{xml,json,csproj}]
+tab_width = 2
+indent_size = 2
+indent_style = space
+
 [*]
 
 # Microsoft .NET properties
