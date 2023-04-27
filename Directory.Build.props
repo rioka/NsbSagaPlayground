@@ -1,0 +1,16 @@
+<Project>
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- explicitly reference most recent version, instead of depending on other packages -->
+    <PackageReference Include="NServiceBus" Version="7.8.*" />
+    <PackageReference Include="NServiceBus.Peristence.Sql" Version="6.6.*" />
+    <PackageReference Include="NServiceBus.Transport.SqlServer" Version="6.3." />
+  </ItemGroup>
+
+</Project>
