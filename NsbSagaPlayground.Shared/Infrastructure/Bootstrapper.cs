@@ -3,7 +3,7 @@ using NServiceBus;
 
 namespace NsbSagaPlayground.Shared.Infrastructure;
 
-public class NsbBootstrapper
+public class Bootstrapper
 {
   public static Task<IEndpointInstance> Start(string endpointName, IConfiguration configuration) 
   {
