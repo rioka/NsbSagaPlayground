@@ -31,9 +31,11 @@ BEGIN
 
   CREATE TABLE [dbo].[Orders]
   (
-    [Id]        INT               NOT NULL IDENTITY(1, 1),
-    [UId]       UNIQUEIDENTIFIER  NOT NULL,
-    [CreatedAt] DATETIME2         NOT NULL
+    [Id]          INT               NOT NULL IDENTITY(1, 1),
+    [UId]         UNIQUEIDENTIFIER  NOT NULL,
+    [CreatedAt]   DATETIME2         NOT NULL,
+    [ConfirmedAt] DATETIME2         NULL,
+    [CancelledAt] DATETIME2         NULL
     
     CONSTRAINT [PK_Orders] PRIMARY KEY CLUSTERED ([Id])
   );
