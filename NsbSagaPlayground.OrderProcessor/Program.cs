@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using NsbSagaPlayground.OrderProcessor.Infrastructure.Behaviors;
 using NsbSagaPlayground.Persistence;
 using NsbSagaPlayground.Shared;
 using NsbSagaPlayground.Shared.Infrastructure;
@@ -31,6 +32,11 @@ internal class Program
       .UseNServiceBus(ctx => {
 
         var endpointConfig = Bootstrapper.Configure(Endpoints.OrderProcessor, ctx.Configuration.GetConnectionString("Data"));
+        endpointConfig.EnableFeature<ForceConnectionFeature>();
+        
+        // temporary
+        endpointConfig.LimitMessageProcessingConcurrencyTo(1);
+        
         return endpointConfig;
       });
     
