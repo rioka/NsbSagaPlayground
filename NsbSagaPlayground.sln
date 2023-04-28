@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NsbSagaPlayground.Sender", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NsbSagaPlayground.OrderProcessor", "NsbSagaPlayground.OrderProcessor\NsbSagaPlayground.OrderProcessor.csproj", "{2FAA14B1-6960-4DC2-9AE8-32602BD5B476}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NsbSagaPlayground.Persistence", "NsbSagaPlayground.Persistence\NsbSagaPlayground.Persistence.csproj", "{AD0946A1-2B7F-4C8B-B691-30601B48BC0D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,5 +45,9 @@ Global
 		{2FAA14B1-6960-4DC2-9AE8-32602BD5B476}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2FAA14B1-6960-4DC2-9AE8-32602BD5B476}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2FAA14B1-6960-4DC2-9AE8-32602BD5B476}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD0946A1-2B7F-4C8B-B691-30601B48BC0D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD0946A1-2B7F-4C8B-B691-30601B48BC0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD0946A1-2B7F-4C8B-B691-30601B48BC0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD0946A1-2B7F-4C8B-B691-30601B48BC0D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
