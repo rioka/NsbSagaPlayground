@@ -6,15 +6,15 @@ internal partial class Program
 {
   private static async Task SendMessages(IMessageSession session)
   {
-    Console.WriteLine("Press '1' enter to create an order");
-    Console.WriteLine("Press '2' enter to cancel most recent order creation request");
-    Console.WriteLine("Press any key to exit");
-
     Guid lastOrder = default;
     var exit = false;
     
     while (!exit)
     {
+      Console.WriteLine("Press '1' enter to create an order");
+      Console.WriteLine("Press '2' enter to cancel most recent order creation request");
+      Console.WriteLine("Press any key to exit");
+      
       var ch = Console.ReadKey();
       Console.WriteLine();
 
