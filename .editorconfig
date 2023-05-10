@@ -276,3 +276,13 @@ resharper_outdent_statement_labels = true
 resharper_place_simple_embedded_statement_on_same_line = false
 resharper_remove_blank_lines_near_braces_in_code = true
 resharper_remove_blank_lines_near_braces_in_declarations = true
+
+# csproj, xml files
+[*.{xml,csproj}]
+
+#### Core EditorConfig Options ####
+
+# Indentation and spacing
+indent_size = 2
+indent_style = space
+tab_width = 2
