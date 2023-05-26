@@ -7,7 +7,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.*" />
     <PackageReference Include="NServiceBus.Extensions.Hosting" Version="1.1.0" />
-  </ItemGroup>
+    <PackageReference Include="NServiceBus.SagaAudit" Version="3.*" />  </ItemGroup>
   
   <ItemGroup>
     <ProjectReference Include="..\NsbSagaPlayground.Persistence\NsbSagaPlayground.Persistence.csproj" />

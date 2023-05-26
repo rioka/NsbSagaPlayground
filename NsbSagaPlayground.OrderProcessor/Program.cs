@@ -33,6 +33,7 @@ internal class Program
 
         var endpointConfig = Bootstrapper.Configure(Endpoints.OrderProcessor, ctx.Configuration.GetConnectionString("Data"));
         endpointConfig.EnableFeature<ForceConnectionFeature>();
+        endpointConfig.AuditSagaStateChanges("audit");
         
         // temporary
         endpointConfig.LimitMessageProcessingConcurrencyTo(1);
