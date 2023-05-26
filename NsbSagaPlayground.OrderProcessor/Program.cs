@@ -33,6 +33,12 @@ internal class Program
 
         var endpointConfig = Bootstrapper.Configure(Endpoints.OrderProcessor, ctx.Configuration.GetConnectionString("Data"));
         endpointConfig.EnableFeature<ForceConnectionFeature>();
+        
+        /*
+         * This currently does not work: apparently the plugin starts its own connection, and I cannot 
+         * find a way to reuse the existing one.
+         * This means it will not work at all when transport "TransactionMode" is "TransactionScope" 
+         */
         endpointConfig.AuditSagaStateChanges("audit");
         
         // temporary
