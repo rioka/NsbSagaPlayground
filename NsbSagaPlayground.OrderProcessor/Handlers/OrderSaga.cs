@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Dapper;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using NsbSagaPlayground.Persistence;
 using NsbSagaPlayground.Shared.Domain;
@@ -33,7 +34,9 @@ internal class OrderSaga : Saga<OrderData>,
   {
     _logger.LogInformation("Processing {Message}", nameof(CreateOrder));
 
-    // TODO insert order
+    var level = await GetIsolationLevel();
+    _logger.LogInformation("Isolation level is {IsolationLevel}", level);
+    
     _dbContext.Orders.Add(Order.Create(message.Id));
     await _dbContext.SaveChangesAsync();
     
@@ -47,6 +50,9 @@ internal class OrderSaga : Saga<OrderData>,
     // See https://docs.particular.net/tutorials/nservicebus-sagas/2-timeouts/
     _logger.LogInformation("Processing {Message}", nameof(CancelOrder));
 
+    var level = await GetIsolationLevel();
+    _logger.LogInformation("Isolation level is {IsolationLevel}", level);
+
     var order = await _dbContext.Orders.SingleAsync(o => o.UId == message.Id);
     order.Cancel();
     await _dbContext.SaveChangesAsync();
@@ -59,6 +65,9 @@ internal class OrderSaga : Saga<OrderData>,
   public async Task Timeout(BuyerRemorseExpired state, IMessageHandlerContext context)
   {
     _logger.LogInformation("Grace period to cancel order {Id} has expired: order is confirmed", Data.OrderId);
+
+    var level = await GetIsolationLevel();
+    _logger.LogInformation("Isolation level is {IsolationLevel}", level);
     
     var order = await _dbContext.Orders.SingleAsync(o => o.UId == Data.OrderId);
     order.Confirm();
@@ -69,5 +78,28 @@ internal class OrderSaga : Saga<OrderData>,
     });
     
     MarkAsComplete();
+  }
+  
+  private async Task<string> GetIsolationLevel()
+  {
+    return await _dbContext
+      .Database
+      .GetDbConnection()
+      .ExecuteScalarAsync<string>(@"
+SELECT 
+  CASE transaction_isolation_level
+    WHEN 1 THEN 'ReadUncomitted'
+    WHEN 2 THEN 'ReadCommitted'
+    WHEN 3 THEN 'Repeatable'
+    WHEN 4 THEN 'Serializable'
+    WHEN 5 THEN 'Snapshot'
+    ELSE 'Unspecified' 
+  END AS transaction_isolation_level,
+  sh.text, ph.query_plan
+FROM 
+  sys.dm_exec_requests
+  CROSS APPLY sys.dm_exec_sql_text(sql_handle) sh
+  CROSS APPLY sys.dm_exec_query_plan(plan_handle) ph
+");
   }
 }
