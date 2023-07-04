@@ -40,7 +40,7 @@ internal class Program
          * This means it will not work at all when transport "TransactionMode" is "TransactionScope" 
          */
         endpointConfig.AuditSagaStateChanges("audit");
-        
+
         // temporary
         endpointConfig.LimitMessageProcessingConcurrencyTo(1);
         
