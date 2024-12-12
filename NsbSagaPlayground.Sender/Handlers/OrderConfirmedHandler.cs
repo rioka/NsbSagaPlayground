@@ -4,7 +4,7 @@ using NServiceBus;
 
 namespace NsbSagaPlayground.Sender.Handlers;
 
-public class OrderConfirmedHandler : IHandleMessages<OrderConfirmed>
+internal class OrderConfirmedHandler : IHandleMessages<OrderConfirmed>
 {
   private readonly ILogger<OrderConfirmedHandler> _logger;
 
@@ -12,10 +12,10 @@ public class OrderConfirmedHandler : IHandleMessages<OrderConfirmed>
   {
     _logger = logger;
   }
-  /// <inheritdoc />
+
   public Task Handle(OrderConfirmed message, IMessageHandlerContext context)
   {
-    _logger.LogInformation("Order {Id} has been cancelled", message.Id);
+    _logger.LogInformation("Order {Id} has been confirmed", message.Id);
     return Task.CompletedTask;
   }
 }
