@@ -9,9 +9,9 @@ public class Order
   public DateTime CreatedAt { get; private set; }
 
   public DateTime? ConfirmedAt { get; private set; }
-  
+
   public DateTime? CancelledAt { get; private set; }
-  
+
   private Order()
   { }
 
@@ -32,7 +32,7 @@ public class Order
 
     ConfirmedAt ??= DateTime.UtcNow;
   }
-  
+
   public void Cancel()
   {
     if (ConfirmedAt.HasValue)

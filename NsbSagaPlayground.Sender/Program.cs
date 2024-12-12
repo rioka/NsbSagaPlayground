@@ -35,7 +35,7 @@ internal partial class Program
         var endpointConfig = Bootstrapper.Configure(Endpoints.Sender, ctx.Configuration.GetConnectionString("Data"));
         return endpointConfig;
       });
-    
+
     return hb;
   }
 }

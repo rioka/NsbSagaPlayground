@@ -12,7 +12,7 @@ internal class SetConnectionBehavior : Behavior<IInvokeHandlerContext>
     var dbContext = context.Builder.Build<AppDbContext>();
     var connection = context.SynchronizedStorageSession.SqlPersistenceSession().Connection;
     dbContext.Database.SetDbConnection(connection);
-    
+
     await next();
   }
 }
