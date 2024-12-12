@@ -1,17 +1,27 @@
 ```plantuml
+participant Sender as Se
 participant Saga as S
-[--> S: ""CreateOrder""
+database Database as DB
+Se --> S: ""CreateOrder""
 
 S --> S: ""RequestTimeout""
 
+note right
+  User is given 1o minutes
+  to cancel the order before
+  order is confirmed
+end note
+
 alt User cancels order
-[--> S: ""CancelOrder""
-S --> S: Cancel order
+Se --> S: ""CancelOrder""
+S --> DB: Cancel order
+S --> Se: Order cancelled
 
 else Grace period expires 
 
 [--> S: ""Timeout<BuyerRemorse>""
-S --> S: Confirm order
+S --> DB: Confirm order
+S --> Se: Order confirmed
 end
 ```
 
@@ -21,7 +31,20 @@ end
 
 WaitingForConfirmation -[#green,bold]-> ConfirmOrder : ""Timeout<BuyerRemorse>""
 
+note on link
+  If the user does not cancel 
+  the order within 1 minute, 
+  the order is automatically 
+  confirmed
+end note
+
 WaitingForConfirmation -[#green,bold]-> CancelOrder : ""CancelOrder""
+
+note on link
+  The user has 1 minute  
+  to cancel the order
+end note
+
 
 ConfirmOrder --> [*]
 CancelOrder --> [*]
