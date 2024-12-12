@@ -42,7 +42,7 @@ internal class OrderSaga : Saga<OrderData>,
 
   public async Task Handle(CancelOrder message, IMessageHandlerContext context)
   {
-    // if CancelOrder is received after BuyerRemorseExpired, nothing will happens
+    // if CancelOrder is received after BuyerRemorseExpired, nothing will happen
     // because the saga is complete
     // See https://docs.particular.net/tutorials/nservicebus-sagas/2-timeouts/
     _logger.LogInformation("Processing {Message}", nameof(CancelOrder));
@@ -52,10 +52,15 @@ internal class OrderSaga : Saga<OrderData>,
     await _dbContext.SaveChangesAsync();
     
     _logger.LogInformation("Order {Id} cancelled", message.Id);
+
+    // ReplyToOriginator is a saga-specific API
+    await ReplyToOriginator(context, new OrderCancelled() {
+      Id = Data.OrderId
+    });
+    
     MarkAsComplete();
   }
 
-  /// <inheritdoc />
   public async Task Timeout(BuyerRemorseExpired state, IMessageHandlerContext context)
   {
     _logger.LogInformation("Grace period to cancel order {Id} has expired: order is confirmed", Data.OrderId);
