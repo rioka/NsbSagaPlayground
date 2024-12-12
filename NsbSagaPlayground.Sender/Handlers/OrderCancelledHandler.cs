@@ -12,7 +12,7 @@ internal class OrderCancelledHandler : IHandleMessages<OrderCancelled>
   {
     _logger = logger;
   }
-  
+
   public Task Handle(OrderCancelled message, IMessageHandlerContext context)
   {
     _logger.LogInformation("Order {Id} has been cancelled", message.Id);

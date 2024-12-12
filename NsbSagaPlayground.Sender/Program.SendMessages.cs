@@ -8,13 +8,13 @@ internal partial class Program
   {
     Guid lastOrder = default;
     var exit = false;
-    
+
     while (!exit)
     {
       Console.WriteLine("Press '1' enter to create an order");
       Console.WriteLine("Press '2' enter to cancel most recent order creation request");
       Console.WriteLine("Press any key to exit");
-      
+
       var ch = Console.ReadKey();
       Console.WriteLine();
 
@@ -43,7 +43,7 @@ internal partial class Program
             Console.WriteLine("No order available for cancellation");
           }
           break;
-          
+
         default:
           exit = true;
           break;

@@ -20,7 +20,7 @@ public class Bootstrapper
 
     config.AuditProcessedMessagesTo("audit");
     config.SendFailedMessagesTo("error");
-    
+
     config.EnableInstallers();
 
     return config;

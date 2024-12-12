@@ -24,7 +24,7 @@ internal class Program
       .UseConsoleLifetime()
       .ConfigureServices(s => {
         s.AddScoped<AppDbContext>(sp => {
-          
+
           var configuration = sp.GetRequiredService<IConfiguration>();
           return new AppDbContext(configuration.GetConnectionString("Data"));
         });
@@ -33,13 +33,13 @@ internal class Program
 
         var endpointConfig = Bootstrapper.Configure(Endpoints.OrderProcessor, ctx.Configuration.GetConnectionString("Data"));
         endpointConfig.EnableFeature<ForceConnectionFeature>();
-        
+
         // temporary
         endpointConfig.LimitMessageProcessingConcurrencyTo(1);
-        
+
         return endpointConfig;
       });
-    
+
     return hb;
   }
 }

@@ -21,7 +21,7 @@ internal class OrderSaga : Saga<OrderData>,
     _dbContext = dbContext;
     _logger = logger;
   }
-  
+
   protected override void ConfigureHowToFindSaga(SagaPropertyMapper<OrderData> mapper)
   {
     mapper.MapSaga(saga => saga.OrderId)
@@ -36,7 +36,7 @@ internal class OrderSaga : Saga<OrderData>,
     // TODO insert order
     _dbContext.Orders.Add(Order.Create(message.Id));
     await _dbContext.SaveChangesAsync();
-    
+
     await RequestTimeout<BuyerRemorseExpired>(context, TimeSpan.FromMinutes(1));
   }
 
@@ -50,29 +50,29 @@ internal class OrderSaga : Saga<OrderData>,
     var order = await _dbContext.Orders.SingleAsync(o => o.UId == message.Id);
     order.Cancel();
     await _dbContext.SaveChangesAsync();
-    
+
     _logger.LogInformation("Order {Id} cancelled", message.Id);
 
     // ReplyToOriginator is a saga-specific API
     await ReplyToOriginator(context, new OrderCancelled() {
       Id = Data.OrderId
     });
-    
+
     MarkAsComplete();
   }
 
   public async Task Timeout(BuyerRemorseExpired state, IMessageHandlerContext context)
   {
     _logger.LogInformation("Grace period to cancel order {Id} has expired: order is confirmed", Data.OrderId);
-    
+
     var order = await _dbContext.Orders.SingleAsync(o => o.UId == Data.OrderId);
     order.Confirm();
     await _dbContext.SaveChangesAsync();
-    
+
     await context.Publish(new OrderConfirmed() {
       Id = Data.OrderId
     });
-    
+
     MarkAsComplete();
   }
 }
